@@ -5,22 +5,16 @@
 #         self.left = left
 #         self.right = right
 
+
 class Solution:
-    def maxPathSum(self, root):
-        """
-        :type root: TreeNode
-        :rtype: int
-        """
-        res = float('-inf')
-        def maxPath(node):
-            nonlocal res 
-            if not node:
-                return 0
-            
-            left = max(0, maxPath(node.left))
-            right = max(0, maxPath(node.right))
-            res = max(res, left + right + node.val)
-            return max(left, right) + node.val
-        
-        maxPath(root)
-        return res
+    def maxPathSum(self, root: TreeNode) -> int:
+        ans = float('-inf')
+        def helper(node):
+            nonlocal ans
+            if not node: return 0
+            l = helper(node.left)
+            r = helper(node.right)
+            ans = max(ans, max(l,0) + max(r, 0) + node.val)
+            return max(l, r, 0) + node.val
+        helper(root)
+        return ans
